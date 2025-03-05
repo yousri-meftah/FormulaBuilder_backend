@@ -6,7 +6,7 @@ from starlette.authentication import AuthCredentials, UnauthenticatedUser
 from jose import jwt, JWTError
 from .database import get_db
 from sqlalchemy.orm import Session
-from .config import Settings
+from .config import settings
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -45,13 +45,13 @@ async def create_access_token(data: dict, expiry: timedelta):
     payload = data.copy()
     expire_in = datetime.now() + expiry
     payload.update({"exp": expire_in})
-    return jwt.encode(payload, Settings.SECRET_KEY, algorithm=Settings.ALGORITHM)
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 def get_token_payload(token: str):
 
     try:
         payload = jwt.decode(
-            token, Settings.SECRET_KEY, algorithms=[Settings.ALGORITHM]
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
         return payload
     except JWTError:

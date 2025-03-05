@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from .base import OurBaseModel
 from typing import Dict, Optional
 
-class FormulaCreate(BaseModel):
+class FormulaCreate(OurBaseModel):
     name: str
     variables: Dict[str, float]
     logic: str
@@ -10,6 +10,3 @@ class FormulaCreate(BaseModel):
 class FormulaOut(FormulaCreate):
     id: int
     creator_id: int
-
-    class Config:
-        orm_mode = True

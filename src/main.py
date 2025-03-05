@@ -5,8 +5,6 @@ from src.models.base import Base
 
 app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
-
 
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(formula.router, prefix="/formula", tags=["Formulas"])
