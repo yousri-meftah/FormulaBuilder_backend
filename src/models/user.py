@@ -9,4 +9,4 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
-    formulas = relationship("Formula", back_populates="creator")  # Ensure this exists
+    formulas = relationship("Formula", back_populates="creator") 

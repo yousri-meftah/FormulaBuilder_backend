@@ -65,11 +65,7 @@ async def authenticate_user(
 #         )
 
 
-@router.get(
-    "/me",
-    status_code=status.HTTP_200_OK,
-    response_model=UserOut
-)
+#@router.get("/me",status_code=status.HTTP_200_OK,response_model=UserOut)
 def get_user_detail(User: models.User = Depends(get_current_user)):
     if User is None:
         raise HTTPException(
