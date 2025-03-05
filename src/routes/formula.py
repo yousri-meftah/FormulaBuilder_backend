@@ -17,6 +17,7 @@ def create_formula(formula: FormulaCreate, db: Session = Depends(get_db),User: m
     db_formula = Formula(
         creator_id = User.id,
         name=formula.name,
+        expression=formula.expression,
         description=formula.description,
         category_id=formula.category_id,
     )
@@ -71,13 +72,20 @@ def execute_formula(formula_id: int, inputs: Dict[str, float], db: Session = Dep
         raise HTTPException(status_code=400, detail="No inputs found for this formula")
 
     # Compute sum of coefficients and divide by total coefficients
-    total_sum = sum(input.coefficient for input in formula_inputs)
-    total_count = len(formula_inputs)
+    my_map = {}
+    total_sum=0.0
+    for input in formula_inputs:
+        my_map[input.name]=input.coefficient
+        total_sum = total_sum + input.coefficient
+
+    total_count=0.0
+    for key,value in inputs.items():
+        total_count = total_count + (value * my_map[key])
 
     if total_count == 0:
         raise HTTPException(status_code=400, detail="Invalid formula: no coefficients")
 
-    result = total_sum / total_count
+    result = total_count / total_sum
 
     # Increment usage count
     formula.usage_count += 1

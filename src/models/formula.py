@@ -9,6 +9,7 @@ class Formula(Base):
     name = Column(String, index=True, nullable=False)
     description = Column(String, nullable=True)
     is_public = Column(Boolean, default=False)
+    expression = Column(String , nullable=False)
     creator_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
     usage_count = Column(Integer, default=0)  # Track how many times used

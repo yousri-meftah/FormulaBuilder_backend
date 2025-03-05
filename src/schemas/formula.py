@@ -12,8 +12,10 @@ class FormulaCreate(OurBaseModel):
     name: str
     description: str
     category_id: int
+    expression:str
     inputs: List[FormulaInputCreate]
 
 class FormulaOut(FormulaCreate):
     id: int
+    creator_id:int
     usage_count: int

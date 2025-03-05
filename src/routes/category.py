@@ -5,6 +5,7 @@ from src.database import get_db
 from src.models.category import Category
 from src.schemas.category import CategoryCreate, CategoryOut
 
+
 router = APIRouter()
 
 
